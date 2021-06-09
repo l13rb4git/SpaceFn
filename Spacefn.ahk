@@ -1,21 +1,51 @@
 ﻿;SpaceFn
+isEditable() {
+    clipsave := ClipboardAll
+
+    clipboard =
+    sendinput |
+    sendinput {left}+{right}
+    sendinput ^x
+    ClipWait, 1
+
+    Clipvar := Clipboard
+    Clipboard := clipsave
+
+    If (Clipvar = "|" )
+        Editable := 1
+    Else
+        Editable := 0
+
+    return Editable
+}
+
+isInTerminal()
+{
+    ; Check if Mintty terminal is focus
+    WinGetClass, vCtlClassNN, A
+    if (vCtlClassNN = "mintty")
+        return 1
+}
+
 #inputlevel,2
 Space::
     StartTime := A_TickCount
 
-    Send {Blind}{Space DownR}
-
+    Sendinput {Blind}{Space DownR}
     while GetKeyState("Space","p")
     if ((A_TickCount - StartTime) > 250)
     {
-        ; TODO: Dont send backspace if not in a text field
-        Send {Blind}{backspace DownR}
+        if (isInTerminal())
+            Sendinput {Blind}{backspace DownR}
+        else if (isEditable())
+            Sendinput {Blind}{backspace DownR}
+
         Send {F24 Down}
         keywait, space
         Send {F24 Up}
         return
     }
-    Return
+    return
 
 #inputlevel,1
 F24 & k::Up
