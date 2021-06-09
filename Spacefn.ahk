@@ -92,5 +92,9 @@ F24 & -::F11
 F24 & =::F12
 
 F24 & v::visualSelectMode()
+F24 & g::
+    #include noMouse.ahk
+    return
+
 F24 & Enter::^Enter
  return
