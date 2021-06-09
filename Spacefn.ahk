@@ -38,6 +38,14 @@ sendWithCtrl(key){
 }
 
 
+visualSelectMode()
+{
+    while GetKeyState("Space","p")
+        send {shift down}
+    send {shift up}{right}
+}
+
+
 #inputlevel,2
 Space::
     StartTime := A_TickCount
@@ -83,5 +91,6 @@ F24 & 0::F10
 F24 & -::F11
 F24 & =::F12
 
+F24 & v::visualSelectMode()
 F24 & Enter::^Enter
  return
