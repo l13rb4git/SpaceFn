@@ -19,6 +19,7 @@ isEditable() {
     return Editable
 }
 
+
 isInTerminal()
 {
     ; Check if Mintty terminal is focus
@@ -26,6 +27,16 @@ isInTerminal()
     if (vCtlClassNN = "mintty")
         return 1
 }
+
+
+sendWithCtrl(key){
+    if (GetKeyState("capslock", "P"))
+        send ^{%key%}
+    else
+        send {%key%}
+    return
+}
+
 
 #inputlevel,2
 Space::
@@ -47,11 +58,13 @@ Space::
     }
     return
 
+
 #inputlevel,1
+
+F24 & h::sendWithCtrl("Left")
+F24 & l::sendWithCtrl("Right")
 F24 & k::Up
 F24 & j::Down
-F24 & h::Left
-F24 & l::Right
 F24 & u::Home
 F24 & o::End
 F24 & n::PgUp
