@@ -101,6 +101,11 @@ F24 & l::Gosub MouseRight
 F24 & h::Gosub MouseLeft
 F24 & j::Gosub MouseDown
 F24 & k::Gosub MouseUp
+F24 & n::Gosub MouseClickHandler
+F24 & m::Gosub MouseRightClick
+F24 & ,::Gosub MouseDoubleClick
+;F24 & ::Gosub MouseForward
+;F24 & ::Gosub MouseBack
 
 Return
 
