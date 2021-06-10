@@ -46,6 +46,9 @@ visualSelectMode()
 }
 
 
+mouse_mode := 0
+
+
 #inputlevel,2
 Space::
     StartTime := A_TickCount
@@ -69,6 +72,7 @@ Space::
 
 #inputlevel,1
 
+#if mouse_mode = 0
 F24 & h::sendWithCtrl("Left")
 F24 & l::sendWithCtrl("Right")
 F24 & k::Up
@@ -93,6 +97,7 @@ F24 & =::F12
 
 F24 & v::visualSelectMode()
 F24 & g::
+    mouse_mode := 1
     #include noMouse.ahk
     return
 

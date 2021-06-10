@@ -37,18 +37,18 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
 
 
 ; --- GENERAL CONFIGURATION ----------------------------------------------------
-  ConstantSpeed := 2      ; Pixels to move when Numpad0 is held down
-  MinSpeed      := 1      ; Pixels to move at the beginning of the movement
-  MaxSpeed      := 2      ; Pixels to move at the fastest inertia
-  Inertia       := 0.1    ; How fast should we increase speed (higher=faster, 0=none)
+  ConstantSpeed := 1      ; Pixels to move when Numpad0 is held down
+  MinSpeed      := 10      ; Pixels to move at the beginning of the movement
+  MaxSpeed      := 100      ; Pixels to move at the fastest inertia
+  Inertia       := 1    ; How fast should we increase speed (higher=faster, 0=none)
   InertiaDelay  := 0      ; Number of movements to wait before starting inertia
   WheelSleep    := 80     ; MSeconds to sleep between wheel sends
   
 ; --- KEYBOARD CONFIGURATION ---------------------------------------------------
-  RightKey      := "Right"
-  DownKey       := "NumpadDown"
-  UpKey         := "NumpadUp"
-  LeftKey       := "NumpadLeft"
+  RightKey      := "l"
+  DownKey       := "j"
+  UpKey         := "k"
+  LeftKey       := "h"
   
   ClickKey      := "NumpadClear"	; Clear is 5 in the numpad
   DoubleClickKey:= "NumpadEnter"	; Double click cn also be done by double tapping the click key
@@ -66,8 +66,8 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
   
 ; --- END OF CONFIGURATION -----------------------------------------------------
 
-Menu Tray, NoStandard
-Menu Tray, Add, Exit No Mouse Today!, Exit
+;Menu Tray, NoStandard
+;Menu Tray, Add, Exit No Mouse Today!, Exit
 
 SysGet ScreenW, 78
 SysGet ScreenH, 79
@@ -95,6 +95,13 @@ Hotkey $%CornerKey%, CornerMouse
 Hotkey *%WheelUpKey%, MouseWheelUp
 Hotkey *%WheelDownKey%, MouseWheelDown
 
+#inputlevel 0
+#if mouse_mode = 1
+F24 & l::Gosub MouseRight
+F24 & h::Gosub MouseLeft
+F24 & j::Gosub MouseDown
+F24 & k::Gosub MouseUp
+
 Return
 
 ;
@@ -105,39 +112,40 @@ MouseMoveHandler:
   
   Counter := 0
   Loop {
-    while GetKeyState("Space","p") {
-        If( GetKeyState( "Alt", "P" ) ) {    ; Wheel Emulation through Ctrl+2468
-        
+      if (!GetKeyState("g","p")) {
+          mouse_mode := 0 
+          break
+      }
+      If( GetKeyState( "Alt", "P" ) ) {    ; Wheel Emulation through Ctrl+2468
+
           WX := ( GetKeyState( RightKey, "P" ) ? 1 : GetKeyState( LeftKey, "P" ) ? 0 : -1 )
           WY := ( GetKeyState( DownKey , "P" ) ? "WheelDown" : GetKeyState( UpKey, "P" )  ? "WheelUp" : -1 )
-          
+
           If( WX<>-1 )
-            SendMessage, 0x114, %WX%, 0, %fcontrol%, A  ; 0x114 is WM_HSCROLL and the 0 after it is SB_LINERIGHT.
+              SendMessage, 0x114, %WX%, 0, %fcontrol%, A  ; 0x114 is WM_HSCROLL and the 0 after it is SB_LINERIGHT.
 
           If( WY<>-1 )
-            SendInput {%WY%}
+              SendInput {%WY%}
 
           Sleep %WheelSleep%
-        }
-        Else {    ; Mouse moves
-                InsPressed := GetKeyState( ConstantKey, "P" )
+      }
+      Else {    ; Mouse moves
+          InsPressed := GetKeyState( ConstantKey, "P" )
           Speed := InsPressed ? ConstantSpeed : Counter>InertiaDelay ? MinSpeed+(Counter-InertiaDelay)*Inertia : MinSpeed
           Speed := Speed > MaxSpeed ? MaxSpeed : Speed
           Counter := InsPressed ? 0 : Counter+1		; Reset Inertia 
-          
+
           X := Speed * ( GetKeyState( RightKey, "P" ) ? 1 : GetKeyState( LeftKey, "P" ) ? -1 : 0 )
           Y := Speed * ( GetKeyState( DownKey , "P" ) ? 1 : GetKeyState( UpKey, "P" )   ? -1 : 0 )
-          
+
           If( X or Y ) {
-            MouseMove %X%,%Y%,,R
-            If( GetKeyState( "Shift" , "P" ) )
-              Break
+              MouseMove %X%,%Y%,,R
+              If( GetKeyState( "Shift" , "P" ) )
+                  Break
           }
           Else 
-           Break
-        }
-    }
-    return
+              Break
+      }
   }
 Return
 
@@ -172,10 +180,12 @@ MouseLeft:
 Return
 
 MouseRight:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
+	If( Not GetKeyState( "Numlock", "T" ) ) {
 		Gosub MouseMoveHandler
-	Else
+    }
+	Else {
 		SendInput % GetModifier() . "{" . RightKey . "}"
+    }
 Return
 
 MouseUp:
