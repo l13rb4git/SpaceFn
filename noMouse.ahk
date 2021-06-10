@@ -39,8 +39,8 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
 ; --- GENERAL CONFIGURATION ----------------------------------------------------
   ConstantSpeed := 1      ; Pixels to move when Numpad0 is held down
   MinSpeed      := 10      ; Pixels to move at the beginning of the movement
-  MaxSpeed      := 100      ; Pixels to move at the fastest inertia
-  Inertia       := 1    ; How fast should we increase speed (higher=faster, 0=none)
+  MaxSpeed      := 300      ; Pixels to move at the fastest inertia
+  Inertia       := 2.5    ; How fast should we increase speed (higher=faster, 0=none)
   InertiaDelay  := 0      ; Number of movements to wait before starting inertia
   WheelSleep    := 80     ; MSeconds to sleep between wheel sends
   
