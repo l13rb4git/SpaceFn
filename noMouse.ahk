@@ -73,30 +73,30 @@ SysGet ScreenW, 78
 SysGet ScreenH, 79
 
 ; • Mouse Moves •
-Hotkey *%RightKey%, MouseRight
-Hotkey *%DownKey%, MouseDown
-Hotkey *%UpKey%, MouseUp
-Hotkey *%LeftKey%, MouseLeft
-Hotkey %ConstantKey%, MouseConstant
+;Hotkey *%RightKey%, MouseRight
+;Hotkey *%DownKey%, MouseDown
+;Hotkey *%UpKey%, MouseUp
+;Hotkey *%LeftKey%, MouseLeft
+;Hotkey %ConstantKey%, MouseConstant
 
-; • Mouse Clicks •
-Hotkey *%ClickKey%, MouseClickHandler
-Hotkey *%ForwardKey%, MouseForward
-Hotkey *%BackKey%, MouseBack
-Hotkey $*%DoubleClickKey%, MouseDoubleClick
-Hotkey $*%RightClickKey%, MouseRightClick
+;; • Mouse Clicks •
+;Hotkey *%ClickKey%, MouseClickHandler
+;Hotkey *%ForwardKey%, MouseForward
+;Hotkey *%BackKey%, MouseBack
+;Hotkey $*%DoubleClickKey%, MouseDoubleClick
+;Hotkey $*%RightClickKey%, MouseRightClick
 
-; • Special Functions •
-Hotkey $*%DragKey%, MouseDrag
-Hotkey $%CenterKey%, CenterMouse
-Hotkey $%CornerKey%, CornerMouse
+;; • Special Functions •
+;Hotkey $*%DragKey%, MouseDrag
+;Hotkey $%CenterKey%, CenterMouse
+;Hotkey $%CornerKey%, CornerMouse
 
-; • Mouse Wheel •
-Hotkey *%WheelUpKey%, MouseWheelUp
-Hotkey *%WheelDownKey%, MouseWheelDown
+;; • Mouse Wheel •
+;Hotkey *%WheelUpKey%, MouseWheelUp
+;Hotkey *%WheelDownKey%, MouseWheelDown
 
 #inputlevel 0
-#if mouse_mode = 1
+#if mouseMode = 1
 F24 & l::Gosub MouseRight
 F24 & h::Gosub MouseLeft
 F24 & j::Gosub MouseDown
@@ -109,6 +109,7 @@ F24 & s::Gosub CenterMouse
 F24 & d::Gosub CornerMouse
 ;F24 & ::Gosub MouseForward
 ;F24 & ::Gosub MouseBack
+F24 & g::mouseMode := toggleMouseMode(mouseMode)
 
 Return
 
@@ -120,8 +121,8 @@ MouseMoveHandler:
   
   Counter := 0
   Loop {
-      if (!GetKeyState("g","p")) {
-          mouse_mode := 0 
+      if (mouseMode = 0) {
+          mouseMode := 0 
           break
       }
       If( GetKeyState( "Alt", "P" ) ) {    ; Wheel Emulation through Ctrl+2468

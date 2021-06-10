@@ -46,7 +46,15 @@ visualSelectMode()
 }
 
 
-mouse_mode := 0
+mouseMode := 0
+
+toggleMouseMode(mouseMode)
+{
+    if (mouseMode = 0) 
+        return 1
+    else
+        return 0
+}
 
 
 #inputlevel,2
@@ -72,7 +80,7 @@ Space::
 
 #inputlevel,1
 
-#if mouse_mode = 0
+#if mouseMode = 0
 F24 & h::sendWithCtrl("Left")
 F24 & l::sendWithCtrl("Right")
 F24 & k::Up
@@ -97,7 +105,7 @@ F24 & =::F12
 
 F24 & v::visualSelectMode()
 F24 & g::
-    mouse_mode := 1
+    mouseMode := toggleMouseMode(mouseMode)
     #include noMouse.ahk
     return
 
