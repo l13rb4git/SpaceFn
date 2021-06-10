@@ -62,8 +62,9 @@ Space::
     StartTime := A_TickCount
 
     Sendinput {Blind}{Space DownR}
+
     while GetKeyState("Space","p")
-    if ((A_TickCount - StartTime) > 250)
+    if ((A_TickCount - StartTime) > 200)
     {
         if (isInTerminal())
             Sendinput {Blind}{backspace DownR}
@@ -79,7 +80,6 @@ Space::
 
 
 #inputlevel,1
-
 #if mouseMode = 0
 F24 & h::sendWithCtrl("Left")
 F24 & l::sendWithCtrl("Right")
