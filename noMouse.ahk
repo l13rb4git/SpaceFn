@@ -181,121 +181,68 @@ Return
 ; otherwise, we will echo the pressed key back to the OS.
 ;
 MouseLeft:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseMoveHandler
-	Else
-		SendInput % GetModifier() . "{" . LeftKey . "}"
+    Gosub MouseMoveHandler
 Return
 
 MouseRight:
-	If( Not GetKeyState( "Numlock", "T" ) ) {
-		Gosub MouseMoveHandler
-    }
-	Else {
-		SendInput % GetModifier() . "{" . RightKey . "}"
-    }
+    Gosub MouseMoveHandler
 Return
 
 MouseUp:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseMoveHandler
-	Else
-		SendInput % GetModifier() . "{" . UpKey . "}"
+    Gosub MouseMoveHandler
 Return
 
 MouseDown:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseMoveHandler
-	Else
-		SendInput % GetModifier() . "{" . DownKey . "}"
+    Gosub MouseMoveHandler
 Return
 
 MouseConstant:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseMoveHandler
-	Else
-		SendInput % GetModifier() . "{" . ConstantKey . "}"
+    Gosub MouseMoveHandler
 Return
 
 MouseWheelDown:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseWheelHandler
-	Else
-		SendInput % GetModifier() . "{" . WheelDownKey . "}"
+    Gosub MouseWheelHandler
 Return
 
 MouseWheelUp:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		Gosub MouseWheelHandler
-	Else
-		SendInput % GetModifier() . "{" . WheelUpKey . "}"
+    Gosub MouseWheelHandler
 Return
 
-
-
-
 MouseClickHandler:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		SendInput % GetModifier() . "{Click}"
-	Else
-		SendInput % GetModifier() . "{" . ClickKey . "}"
+    SendInput % GetModifier() . "{Click}"
 Return
 
 MouseForward:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		SendEvent {XButton2}
-	Else
-		SendInput % GetModifier() . "{" . ForwardKey . "}"
+    SendEvent {XButton2}
 Return
 
 MouseBack:
-	If( Not GetKeyState( "Numlock", "T" ) ) 
-		SendEvent {XButton1}
-	Else
-		SendInput % GetModifier() . "{" . BackKey . "}"
+    SendEvent {XButton1}
 Return
 
 MouseDoubleClick:
-  If( Not GetKeyState( "Numlock", "T" ) )
     Click 2
-  Else
-    SendInput % GetModifier() . "{" . DoubleClickKey . "}"
 Return
 
 MouseRightClick:
-  If( Not GetKeyState( "Numlock", "T" ) )
     SendInput % GetModifier() . "{RButton}"
-  Else
-    SendInput % GetModifier() . "{" . RightClickKey . "}"
 Return
 
 MouseDrag:
-  If( Not GetKeyState( "Numlock", "T" ) ) {
     SendInput % "{LButton " . ( _Drag ? "Up}" : "Down}" )
     _Drag := Not _Drag
-  }     
-  Else
-    SendInput % GetModifier() . "{" . DragKey . "}"
 Return
 
 CenterMouse:
-  If( Not GetKeyState( "Numlock", "T" ) ) {
     WinGetPos X,Y,W,H,A
     MouseMove % X+W/2, % Y+H/2
-  }
-  Else
-    SendInput % GetModifier() . "{" . CenterKey . "}"
 Return
 
 CornerMouse:
-  If( Not GetKeyState( "Numlock", "T" ) ) {
-		MouseGetPos MX, MY
-		NewX := ( MY < ScreenH/2 ) ? ScreenW/4*3 : ScreenW/4 
-		NewY := ( MX > ScreenW/2 ) ? ScreenH/4*3 : ScreenH/4 
+    MouseGetPos MX, MY
+    NewX := ( MY < ScreenH/2 ) ? ScreenW/4*3 : ScreenW/4 
+    NewY := ( MX > ScreenW/2 ) ? ScreenH/4*3 : ScreenH/4 
     MouseMove %NewX%, %NewY%
-  }
-  Else
-    SendInput % GetModifier() . "{" . CornerKey . "}"
 Return
 
 
