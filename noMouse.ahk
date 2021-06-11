@@ -107,9 +107,9 @@ F24 & ,::Gosub MouseDoubleClick
 F24 & a::Gosub MouseDrag
 F24 & s::Gosub CenterMouse
 F24 & d::Gosub CornerMouse
+F24 & g::mouseMode := toggleMouseMode(mouseMode)
 ;F24 & ::Gosub MouseForward
 ;F24 & ::Gosub MouseBack
-F24 & g::mouseMode := toggleMouseMode(mouseMode)
 
 Return
 
@@ -121,8 +121,7 @@ MouseMoveHandler:
   
   Counter := 0
   Loop {
-      if (mouseMode = 0) {
-          mouseMode := 0 
+      if !(mouseMode) {
           break
       }
       If( GetKeyState( "Alt", "P" ) ) {    ; Wheel Emulation through Ctrl+2468
