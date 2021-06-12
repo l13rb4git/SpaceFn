@@ -56,8 +56,8 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
   ForwardKey    := "NumpadPgUp"	
   BackKey       := "NumpadPgDn"
   
-  WheelUpKey    := "NumpadHome"
-  WheelDownKey  := "NumpadEnd"
+  WheelUpKey    := "u"
+  WheelDownKey  := "o"
   
   CornerKey     := "NumpadDel"		; Moves the mouse between the 4 quarters of the screen
   CenterKey     := "NumpadSub"		; Centers the mouse on the screen
@@ -107,6 +107,8 @@ F24 & ,::Gosub MouseDoubleClick
 F24 & a::Gosub MouseDrag
 F24 & s::Gosub CenterMouse
 F24 & d::Gosub CornerMouse
+F24 & u::Gosub MouseWheelUp
+F24 & o::Gosub MouseWheelDown
 F24 & g::mouseMode := toggleMouseMode(mouseMode)
 ;F24 & ::Gosub MouseForward
 ;F24 & ::Gosub MouseBack
