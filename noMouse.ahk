@@ -37,10 +37,10 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
 
 
 ; --- GENERAL CONFIGURATION ----------------------------------------------------
-  ConstantSpeed := 1      ; Pixels to move when Numpad0 is held down
-  MinSpeed      := 10      ; Pixels to move at the beginning of the movement
-  MaxSpeed      := 300      ; Pixels to move at the fastest inertia
-  Inertia       := 2.5    ; How fast should we increase speed (higher=faster, 0=none)
+  ConstantSpeed := 10      ; Pixels to move when Numpad0 is held down
+  MinSpeed      := 1      ; Pixels to move at the beginning of the movement
+  MaxSpeed      := 1000      ; Pixels to move at the fastest inertia
+  Inertia       := 30    ; How fast should we increase speed (higher=faster, 0=none)
   InertiaDelay  := 0      ; Number of movements to wait before starting inertia
   WheelSleep    := 80     ; MSeconds to sleep between wheel sends
   
@@ -62,7 +62,7 @@ SendMode InputThenPlay			; If not working, try: SendMode Input
   CornerKey     := "NumpadDel"		; Moves the mouse between the 4 quarters of the screen
   CenterKey     := "NumpadSub"		; Centers the mouse on the screen
   DragKey       := "NumpadDiv"		; Toggle to start/stop dragging  
-  ConstantKey   := "NumpadIns"		; Hold while moving to ignore inertia
+  ConstantKey   := "a"		; Hold while moving to ignore inertia
   
 ; --- END OF CONFIGURATION -----------------------------------------------------
 
@@ -101,15 +101,20 @@ F24 & l::Gosub MouseRight
 F24 & h::Gosub MouseLeft
 F24 & j::Gosub MouseDown
 F24 & k::Gosub MouseUp
+F24 & a::Gosub MouseConstant
 F24 & n::Gosub MouseClickHandler
 F24 & m::Gosub MouseRightClick
 F24 & ,::Gosub MouseDoubleClick
-F24 & a::Gosub MouseDrag
+F24 & f::Gosub MouseDrag
 F24 & s::Gosub CenterMouse
 F24 & d::Gosub CornerMouse
 F24 & u::Gosub MouseWheelUp
 F24 & o::Gosub MouseWheelDown
-F24 & g::mouseMode := toggleMouseMode(mouseMode)
+F24 & c::keepHolding := toggleVar(keepHolding)
+F24 & g::
+    keepHolding := false        ; Release f24 key after leave mouse mode
+    mouseMode := toggleVar(mouseMode)
+
 ;F24 & ::Gosub MouseForward
 ;F24 & ::Gosub MouseBack
 
