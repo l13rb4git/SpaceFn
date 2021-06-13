@@ -1,4 +1,10 @@
 ﻿;SpaceFn
+
+
+mouseMode := 0
+keepHolding := false
+
+
 isEditable() {
     clipsave := ClipboardAll
 
@@ -46,14 +52,12 @@ visualSelectMode()
 }
 
 
-mouseMode := 0
-
-toggleMouseMode(mouseMode)
+toggleVar(var)
 {
-    if (mouseMode = 0) 
-        return 1
-    else
+    if (var) 
         return 0
+    else
+        return 1
 }
 
 
@@ -73,7 +77,8 @@ Space::
 
         Send {F24 Down}
         keywait, space
-        Send {F24 Up}
+        if !(keepHolding)
+            Send {F24 Up}
         return
     }
     return
@@ -89,7 +94,6 @@ F24 & u::Home
 F24 & o::End
 F24 & n::PgUp
 F24 & m::PgDn
- 
 F24 & 1::F1
 F24 & 2::F2
 F24 & 3::F3
@@ -102,12 +106,10 @@ F24 & 9::F9
 F24 & 0::F10
 F24 & -::F11
 F24 & =::F12
-
 F24 & v::visualSelectMode()
 F24 & g::
-    mouseMode := toggleMouseMode(mouseMode)
+    mouseMode := toggleVar(mouseMode)
     #include noMouse.ahk
-    return
 
 F24 & Enter::^Enter
  return
