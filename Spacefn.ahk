@@ -10,7 +10,7 @@ isEditable() {
 
     clipboard =
     sendinput |
-    sendinput {left}+{right}
+    sendinput +{left}
     sendinput ^x
     ClipWait, 1
 
